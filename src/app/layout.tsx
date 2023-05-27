@@ -1,7 +1,12 @@
-import './globals.css'
-import { Inter } from 'next/font/google'
+"use client"
+import { Suspense } from 'react'
+import { Montserrat } from 'next/font/google'
+import {AnimatePresence} from 'framer-motion';
+import Header from '@/components/Header'
 
-const inter = Inter({ subsets: ['latin'] })
+import './globals.css'
+
+const montserrat = Montserrat({ subsets: ['latin'] })
 
 export const metadata = {
   title: 'Create Next App',
@@ -15,7 +20,14 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={montserrat.className}>
+        <AnimatePresence mode="wait" onExitComplete={() => window.scrollTo(0, 0)}>
+          <Header />
+          <Suspense fallback={""}>
+            {children}
+          </Suspense>
+        </AnimatePresence>
+      </body>
     </html>
   )
 }
