@@ -1,9 +1,17 @@
-import Image from 'next/image'
+"use client";
+import { useState } from 'react';
+import HomeHeader from '@/components/Home/HomeHeader';
+import HomeDeals from '@/components/Home/HomeDeals/HomeDeals';
 
-export default function Home() {
+const Home = () => {
+  const [selectedCategory, setSelectedCategory] = useState('all');
+
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      
-    </main>
-  )
-}
+    <div className='w-full h-full bg-white'>
+      <HomeHeader category={selectedCategory} setCategory={setSelectedCategory} />
+      <HomeDeals />
+    </div>
+  );
+};
+
+export default Home;

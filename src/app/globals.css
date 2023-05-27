@@ -3,8 +3,8 @@
 @tailwind utilities;
 
 html {
-  width: '100%';
-  height: '100%';
+  width: 100%;
+  height: 100%;
 }
 
 :root {
@@ -22,8 +22,8 @@ html {
 }
 
 body {
-  width: '100%';
-  height: '100%';
+  width: 100%;
+  height: 100%;
   box-sizing: border-box;
   color: rgb(var(--foreground-rgb));
   background: linear-gradient(
@@ -36,6 +36,6 @@ body {
 
 
 #root {
-  width: '100%';
-  height: '100%';
+  width: 100%;
+  height: 100%;
 }

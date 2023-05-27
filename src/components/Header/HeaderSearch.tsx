@@ -34,6 +34,7 @@ const HeaderSearch = ({ isLargeView }: { isLargeView?: Boolean }) => {
       <input
         value={value}
         className="text-black h-full w-full md:w-80 rounded-l-full outline-none px-4 bg-red.100"
+        placeholder='Search products...'
         onChange={e => setValue(e.target.value)}
       />
       <button
