@@ -28,18 +28,20 @@ const HeaderSearch = ({ isLargeView }: { isLargeView?: Boolean }) => {
 
   return (
     <form
-      className={`${isLargeView && 'hidden md:block '} flex  h-8`}
+      className={`${
+        isLargeView && 'hidden md:block '
+      } flex h-8 overflow-hidden	`}
       onKeyUp={_handleEnterPress}
       onSubmit={_handleSearchClick}>
       <input
         value={value}
-        className="text-black h-full w-full md:w-80 rounded-l-full outline-none px-4 bg-red.100"
-        placeholder='Search products...'
+        className="text-black h-full rounded-l-full w-full md:w-96 outline-none px-4 bg-red.100"
+        placeholder="Search products..."
         onChange={e => setValue(e.target.value)}
       />
       <button
         type="submit"
-        className="text-white text-xs px-2 md:text-lg  bg-red-600 rounded-r-full h-full outline-none w-20 "
+        className="text-white text-xs px-2 md:text-lg h-8 bg-red-600 rounded-r-full outline-none "
         onClick={_handleSearchClick}>
         {loading ? <ClipLoader size={16} color="white" /> : 'Search'}
       </button>
