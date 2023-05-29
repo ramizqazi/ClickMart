@@ -3,7 +3,7 @@
 const SignUp = () => {
   return (
     <div className="w-full h-full flex items-center justify-center bg-gray-200">
-      <div className="w-96  text-center p-5 bg-gray-100 rounded overflow-hidden shadow-xl">
+      <div className="w-96  text-center p-5 bg-gray-100 rounded overflow-hidden  mx-4 shadow-xl">
         <h1 className="shrink-0 text-3xl font-bold text-gray-700">
           ClickMart
           <span style={{ color: '#D2203A' }}>.</span>

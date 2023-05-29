@@ -48,13 +48,13 @@ any) => {
 
   return (
     <div className="pt-5 flex md:pt-0">
-      <button className="text-black p-2" onClick={_handleWishListClick}>
+      <button className="text-black p-2 flex items-center" onClick={_handleWishListClick}>
         <Heart color="red" fill={existInWishList ? 'red' : 'none'} />
-        {showDetail && <p className="ml-2">Add to Wish list</p>}
+        {showDetail && <p className="ml-2 text-red-600">Add to Wish list</p>}
       </button>
-      <button className="text-black p-2" onClick={_handleCartClick}>
+      <button className="text-black p-2 flex items-center" onClick={_handleCartClick}>
         <ShoppingCart color="red" fill={existInCart ? 'red' : 'none'} />
-        {showDetail && <p className="ml-2">Add to Cart</p>}
+        {showDetail && <p className="ml-2 text-red-600">Add to Cart</p>}
       </button>
       {/* <ProductActionsLoginModal isVisible={isOpen} onClose={onClose} /> */}
     </div>

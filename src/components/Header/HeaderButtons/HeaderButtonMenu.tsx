@@ -38,7 +38,7 @@ export default function HeaderButtonMenu({ user }: { user?: any }) {
                 <>
                   {!user ? (
                     <Link
-                      href="/login"
+                      href="/auth/sign-in"
                       className={classNames(
                         active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
                         'block px-4 py-2 text-sm',
@@ -60,7 +60,7 @@ export default function HeaderButtonMenu({ user }: { user?: any }) {
                 <>
                   {!user ? (
                     <Link
-                      href="/login"
+                      href="/auth/sign-up"
                       className={classNames(
                         active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
                         'block px-4 py-2 text-sm',
