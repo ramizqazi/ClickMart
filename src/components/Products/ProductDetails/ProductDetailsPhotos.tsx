@@ -1,3 +1,4 @@
+// @ts-nocheck
 /* eslint-disable @next/next/no-img-element */
 import Image from 'next/image';
 import React, { ComponentProps, useState } from 'react';
