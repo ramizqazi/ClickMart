@@ -12,9 +12,9 @@ export interface DealsType {
 
 export const deals = [
   {
-    title: 'Welcome to E-Com Online  Clothing Store!',
+    title: 'Welcome to ClickMart Online  Clothing Store!',
     description:
-      'The official E-Com online store in Pakistan. shop from exclusive range of new arrivals & latest  trends',
+      'The official ClickMart online store in Pakistan. shop from exclusive range of new arrivals & latest  trends',
     button: 'Read More',
     image: Img1.src,
   },

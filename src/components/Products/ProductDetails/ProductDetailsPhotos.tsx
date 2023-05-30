@@ -15,6 +15,8 @@ const ProductDetailsPhotos = ({
     <div className="flex-col w-full lg:w-1/3">
       <div className="w-full">
         <Slider
+          autoplay
+          duration={4000}
           slideIndex={0}
           onSlideChange={(e: Event | any) => setSlideIndex(e.slideIndex)}>
           {photos?.map(photo => (
