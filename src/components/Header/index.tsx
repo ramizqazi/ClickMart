@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 
 import HeaderSearch from './HeaderSearch';
-import HeaderButton from './HeaderButtons';
+import HeaderButtons from './HeaderButtons';
 
 const Header = () => {
   return (
@@ -24,7 +24,7 @@ const Header = () => {
           </h1>
         </Link>
         <HeaderSearch isLargeView />
-        <HeaderButton />
+        <HeaderButtons />
       </div>
     </motion.div>
   );

@@ -1,29 +1,24 @@
 import React, { useState } from 'react';
-import ClipLoader from 'react-spinners/ClipLoader';
+import { useRouter } from 'next/navigation';
 
 const HeaderSearch = ({ isLargeView }: { isLargeView?: Boolean }) => {
+  const router = useRouter();
   const [value, setValue] = useState('');
-  const [loading, setLoading] = useState(false);
 
   const _handleSearchClick = async (e: any) => {
     e.preventDefault();
-    // if (value) {
-    //   setLoading(true);
-    //   await productFind(value, () => history.push(`/search?q=${value}`));
-    //   setLoading(false);
-    //   setValue('');
-    // }
+    if (value) {
+      router.push(`/product/search?query=${value}`);
+    }
   };
+
   const _handleEnterPress = async (e: any) => {
     e.preventDefault();
-    // if (e.keyCode === 13) {
-    //   if (value) {
-    //     setLoading(true);
-    //     await productFind(value, () => history.push(`/search?q=${value}`));
-    //     setLoading(false);
-    //     setValue('');
-    //   }
-    // }
+    if (e.keyCode === 13) {
+      if (value) {
+        router.push(`/product/search?query=${value}`);
+      }
+    }
   };
 
   return (
@@ -43,7 +38,7 @@ const HeaderSearch = ({ isLargeView }: { isLargeView?: Boolean }) => {
         type="submit"
         className="text-white text-xs px-2 md:text-lg h-8 bg-red-600 rounded-r-full outline-none "
         onClick={_handleSearchClick}>
-        {loading ? <ClipLoader size={16} color="white" /> : 'Search'}
+        Search
       </button>
     </form>
   );

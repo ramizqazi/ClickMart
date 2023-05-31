@@ -6,6 +6,7 @@ import Header from '@/components/Header';
 import { usePathname } from 'next/navigation';
 
 import './globals.css';
+import './extraSlider.css';
 
 const montserrat = Montserrat({ subsets: ['latin'] });
 

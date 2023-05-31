@@ -1,30 +1,22 @@
 'use client';
-import { useState } from 'react';
-import FlatList from 'flatlist-react';
+
+import { useParams } from 'next/navigation';
+import FlatList from 'flatlist-react/lib';
+import ProductCard from '@/common/ProductCard';
 import { useMediaQuery } from 'react-responsive';
 
-import ProductCard from '@/common/ProductCard';
-import HomeHeader from '@/components/Home/HomeHeader';
-import HomeDeals from '@/components/Home/HomeDeals/HomeDeals';
-import HomeHeroSection from '@/components/Home/HomeHeroSection';
-
-const Home = () => {
+const Product = () => {
+  const pathname = useParams();
   const isBigScreen = useMediaQuery({ query: '(max-width: 766px)' });
-  const [selectedCategory, setSelectedCategory] = useState('all');
 
   const _handleLoadMoreItems = () => {
     // getProducts(category, nextCursor);
   };
 
   const _renderEmpty = () => <div></div>;
-
+  console.log(pathname);
   return (
-    <div className="w-full pb-5 bg-gray-200">
-      <HomeHeader
-        category={selectedCategory}
-        setCategory={setSelectedCategory}
-      />
-      <HomeDeals />
+    <div className="bg-white">
       <div className="p-2 max-w-screen-xl m-auto">
         <FlatList
           list={[
@@ -113,11 +105,10 @@ const Home = () => {
           renderWhenEmpty={_renderEmpty}
         />
       </div>
-      <HomeHeroSection />
     </div>
   );
 };
 
 const renderItem = (item: any) => <ProductCard key={item.id} product={item} />;
 
-export default Home;
+export default Product;

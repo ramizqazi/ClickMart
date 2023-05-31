@@ -3,43 +3,48 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 
 import ProductActions from './ProductActions/index';
+const product = {
+  id: 1,
+  name: 'Basic Tee',
+  href: '#',
+  imageSrc:
+    'https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg',
+  imageAlt: "Front of men's Basic Tee in black.",
+  price: '$35',
+  color: 'Black',
+};
+// More products...
 
-const ProductCard = ({ product }: any) => {
-  const photo = product?.photos[0];
-  const name = product?.name;
-  const price = product?.price;
-  const store = product?.store?.name;
-
+const ProductCard = () => {
   return (
-    <motion.div
-      initial={{ y: 40 }}
-      animate={{ y: 0 }}
-      transition={{
-        duration: 0.6,
-        ease: 'easeInOut',
-      }}
-      className="productCard bg-white shadow-lg rounded-md ">
-      <Link href={`/product/${product?.id}`}>
+    <Link
+      href={`/product/${1}`}
+      className="group relative bg-white p-5 rounded-lg shadow-md">
+      <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md lg:aspect-none group-hover:opacity-75 lg:h-80">
         <img
-          className="w-full h-auto 	rounded-md mb-2 "
-          src={photo}
-          alt={name}
+          src={product.imageSrc}
+          alt={product.imageAlt}
+          className="h-full w-full object-cover object-center lg:h-full lg:w-full"
         />
-      </Link>
-      <div className="text-center flex justify-between items-center py-2">
+      </div>
+      <div className="mt-4 flex justify-between">
         <div>
-          <h2 className="text-black text-sm text-red-600 text-left font-bold">
-            {store}
-          </h2>
-          <h1 className="text-black text-left font-bold">{name}</h1>
+          <h3 className="text-lg font-semibold text-gray-700">
+            <a href={product.href}>
+              <span aria-hidden="true" className="absolute inset-0" />
+              {product.name}
+            </a>
+          </h3>
+          <p className="mt-1 text-sm text-red-600 font-bold">Daraz</p>
         </div>
         <div>
-          <p className="text-red-600 font-bold">{`Rs. ${price}`}</p>
-          <p className="text-gray-500 text-xs text-right font-bold line-through">{`Rs. ${price}`}</p>
+          <p className="text-lg font-semibold text-red-600">{product.price}</p>
+          <p className="text-sm font-semibold text-gray-500 text-right line-through">
+            $55
+          </p>
         </div>
       </div>
-      <ProductActions id={product?.id} />
-    </motion.div>
+    </Link>
   );
 };
 

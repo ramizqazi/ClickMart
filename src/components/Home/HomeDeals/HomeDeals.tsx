@@ -4,8 +4,6 @@ import Slider from 'react-animated-slider';
 import 'react-animated-slider/build/horizontal.css';
 
 import { deals, DealsType } from './Deals';
-import './dealsSlider.css';
-import './dealsSliderAnimation.css';
 
 const HomeDeals = () => (
   <Slider className="slider-wrapper">
