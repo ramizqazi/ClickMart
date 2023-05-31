@@ -67,6 +67,7 @@ const ProductDetails = ({
           )}
           <div className='pt-5 lg:pt-0'>
             <ProductActions showDetail id={id} />
+            <button className='bg-red-600 px-3 py-2 rounded-md'>Buy now</button>
           </div>
         </div>
       </div>

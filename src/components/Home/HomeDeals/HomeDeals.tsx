@@ -16,8 +16,8 @@ const HomeDeals = () => (
           style={{ backgroundImage: `url(${item.image})` }}
           className="slider-content relative bg-center bg-cover bg-no-repeat">
           <div className="inner">
-            <p>{item.description}</p>
             <h1>{item.title}</h1>
+            <p>{item.description}</p>
             <button type="button" className="bg-red-600 rounded-full px-4 py-2">
               {item.button}
             </button>
