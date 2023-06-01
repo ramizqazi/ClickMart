@@ -1,8 +1,7 @@
 import React, { ComponentProps } from 'react';
 import Link from 'next/link';
-import { motion } from 'framer-motion';
+import Image from 'next/image';
 
-import ProductActions from './ProductActions/index';
 const product = {
   id: 1,
   name: 'Basic Tee',
@@ -19,12 +18,14 @@ const ProductCard = () => {
   return (
     <Link
       href={`/product/${1}`}
-      className="group relative bg-white p-5 rounded-lg shadow-md">
+      className="group relative bg-white p-5 rounded-lg shadow-md ">
       <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md lg:aspect-none group-hover:opacity-75 lg:h-80">
-        <img
+        <Image
           src={product.imageSrc}
+          width="200"
+          height="200"
           alt={product.imageAlt}
-          className="h-full w-full object-cover object-center lg:h-full lg:w-full"
+          className="h-full w-full object-cover object-center z-0 lg:h-full lg:w-full"
         />
       </div>
       <div className="mt-4 flex justify-between">

@@ -34,7 +34,6 @@ const categories = [
 <HomeHeader />
 ============================================================================= */
 const HomeHeader = ({ setCategory }: Props) => {
-
   const _handleTabChange = (value: string) => {
     setCategory(value);
   };
@@ -47,7 +46,7 @@ const HomeHeader = ({ setCategory }: Props) => {
         ease: 'easeInOut',
         duration: 0.9,
       }}
-      className="sticky top-0 flex justify-between shadow-xl">
+      className="sticky top-0 z-50 flex justify-between shadow-xl">
       <Tab.Group>
         <Tab.List className="flex-1 max-w-screen-xl mx-auto overflow-auto px-5 md:px-0">
           {categories?.map(category => (
