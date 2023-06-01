@@ -109,6 +109,6 @@ const Product = () => {
   );
 };
 
-const renderItem = (item: any) => <ProductCard key={item.id} product={item} />;
+const renderItem = (item: any) => <ProductCard key={item.id} />;
 
 export default Product;
