@@ -9,6 +9,7 @@ const HeaderSearch = ({ isLargeView }: { isLargeView?: Boolean }) => {
     e.preventDefault();
     if (value) {
       router.push(`/product/search?query=${value}`);
+      setValue('');
     }
   };
 
@@ -17,6 +18,7 @@ const HeaderSearch = ({ isLargeView }: { isLargeView?: Boolean }) => {
     if (e.keyCode === 13) {
       if (value) {
         router.push(`/product/search?query=${value}`);
+        setValue('');
       }
     }
   };
