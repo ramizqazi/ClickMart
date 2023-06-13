@@ -4,21 +4,7 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'tailwindui.com',
-        port: '',
-        pathname: '/img/ecommerce-images/**',
-      },
-      {
-        protocol: 'https',
-        hostname: 'cdn.sanity.io',
-        port: '',
-        pathname: '/images/wsc2hkxk/development/**',
-      },
-      {
-        protocol: 'https',
-        hostname: 'cdn.sanity.io',
-        port: '',
-        pathname: '/images/wsc2hkxk/production/**',
+        hostname: '**',
       },
     ],
   },
