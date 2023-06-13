@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import FlatList from 'flatlist-react';
 import { useMediaQuery } from 'react-responsive';
 
@@ -7,16 +7,38 @@ import ProductCard from '@/common/ProductCard';
 import HomeHeader from '@/components/Home/HomeHeader';
 import HomeDeals from '@/components/Home/HomeDeals/HomeDeals';
 import HomeHeroSection from '@/components/Home/HomeHeroSection';
+import HomeListEmpty from '@/components/Home/HomeListEmpty';
+
+import { useGetProudcts } from '../../sanity/lib/queries';
 
 const Home = () => {
   const isBigScreen = useMediaQuery({ query: '(max-width: 766px)' });
   const [selectedCategory, setSelectedCategory] = useState('all');
+  const { data: products, refetch, isLoading, isError } = useGetProudcts(selectedCategory);
 
-  const _handleLoadMoreItems = () => {
-    // getProducts(category, nextCursor);
+
+  useEffect(() => {
+    refetch();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedCategory])
+
+  const _renderEmpty = () => {
+    return (
+      <>
+        {isLoading  && <HomeListEmpty />}
+        {isError  && (
+          <div className='h-52 justify-center items-center flex'>
+             <p className='text-center text-gray-400'>Coudnt fetch prodcuts something went wrong</p>
+          </div>
+        )}
+        {!isLoading && !isError && products?.length === 0 && (
+          <div className='h-52 justify-center items-center flex'>
+             <p className='text-center text-gray-400'>No product availble for this category</p>
+          </div>
+        )}
+      </>
+    )
   };
-
-  const _renderEmpty = () => <div></div>;
 
   return (
     <div className="w-full pb-5 bg-gray-200">
@@ -27,88 +49,10 @@ const Home = () => {
       <HomeDeals />
       <div className="p-2 max-w-screen-xl m-auto">
         <FlatList
-          list={[
-            {
-              id: '1',
-              photos: [
-                'https://www.kayazar.com/images/product_gallery/1647383044_kayazar-TShirt-What-Other-Think-None-Business-Army-Green.webp',
-              ],
-              name: 'T-shirt',
-              price: 500,
-              store: {
-                name: 'Daraz.pk',
-              },
-            },
-            {
-              id: '1',
-              photos: [
-                'https://www.kayazar.com/images/product_gallery/1647383044_kayazar-TShirt-What-Other-Think-None-Business-Army-Green.webp',
-              ],
-              name: 'T-shirt',
-              price: 500,
-              store: {
-                name: 'Daraz.pk',
-              },
-            },
-            {
-              id: '1',
-              photos: [
-                'https://www.kayazar.com/images/product_gallery/1647383044_kayazar-TShirt-What-Other-Think-None-Business-Army-Green.webp',
-              ],
-              name: 'T-shirt',
-              price: 500,
-              store: {
-                name: 'Daraz.pk',
-              },
-            },
-            {
-              id: '1',
-              photos: [
-                'https://www.kayazar.com/images/product_gallery/1647383044_kayazar-TShirt-What-Other-Think-None-Business-Army-Green.webp',
-              ],
-              name: 'T-shirt',
-              price: 500,
-              store: {
-                name: 'Daraz.pk',
-              },
-            },
-            {
-              id: '1',
-              photos: [
-                'https://www.kayazar.com/images/product_gallery/1647383044_kayazar-TShirt-What-Other-Think-None-Business-Army-Green.webp',
-              ],
-              name: 'T-shirt',
-              price: 500,
-              store: {
-                name: 'Daraz.pk',
-              },
-            },
-            {
-              id: '1',
-              photos: [
-                'https://www.kayazar.com/images/product_gallery/1647383044_kayazar-TShirt-What-Other-Think-None-Business-Army-Green.webp',
-              ],
-              name: 'T-shirt',
-              price: 500,
-              store: {
-                name: 'Daraz.pk',
-              },
-            },
-            {
-              id: '1',
-              photos: [
-                'https://www.kayazar.com/images/product_gallery/1647383044_kayazar-TShirt-What-Other-Think-None-Business-Army-Green.webp',
-              ],
-              name: 'T-shirt',
-              price: 500,
-              store: {
-                name: 'Daraz.pk',
-              },
-            },
-          ]}
+          list={products}
           displayGrid
           renderItem={renderItem}
-          loadMoreItems={_handleLoadMoreItems}
+          loadMoreItems={refetch}
           minColumnWidth={isBigScreen ? '170px' : '250px'}
           renderWhenEmpty={_renderEmpty}
         />
@@ -118,6 +62,6 @@ const Home = () => {
   );
 };
 
-const renderItem = (item: any) => <ProductCard key={item.id} />;
+const renderItem = (item: any) => <ProductCard key={item._id} product={item} />;
 
 export default Home;

@@ -1,6 +1,6 @@
 import { Tab } from '@headlessui/react';
 import { motion } from 'framer-motion';
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { Fragment } from 'react';
 
 interface Props {
   category: string;
@@ -21,12 +21,12 @@ const categories = [
     value: 'women',
   },
   {
-    title: 'Electronics',
-    value: 'electornics',
+    title: 'Kids',
+    value: 'kids',
   },
   {
-    title: 'Jewelry',
-    value: 'jewelry',
+    title: 'Shoes',
+    value: 'shoes',
   },
 ];
 

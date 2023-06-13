@@ -2,8 +2,11 @@
 import { Suspense } from 'react';
 import { Montserrat } from 'next/font/google';
 import { AnimatePresence } from 'framer-motion';
-import Header from '@/components/Header';
 import { usePathname } from 'next/navigation';
+import { QueryClientProvider } from 'react-query';
+
+import Header from '@/components/Header';
+import { client as queryClient } from '../../config/react-query';
 
 import './globals.css';
 import './extraSlider.css';
@@ -25,7 +28,9 @@ export default function RootLayout({
           mode="wait"
           onExitComplete={() => window.scrollTo(0, 0)}>
           {!isAuthScreen && <Header />}
-          <Suspense fallback={''}>{children}</Suspense>
+          <QueryClientProvider client={queryClient}>
+            <Suspense fallback={''}>{children}</Suspense>
+          </QueryClientProvider>
         </AnimatePresence>
       </body>
     </html>
