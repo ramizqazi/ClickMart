@@ -14,6 +14,7 @@ export const useGetProudcts = (category: string) =>
           _id,
           name,
           price,
+          category,
           thumbnail,
           previousPrice,
         }`)

@@ -25,7 +25,7 @@ const ProductSizes = ({ sizes, selectedSize, onSizeSelect }: Props) => {
           {sizes?.map(size => (
             <RadioGroup.Option
               key={size.name}
-              value={size}
+              value={size?.name}
               disabled={!size.inStock}
               className={({ active }) =>
                 classNames(

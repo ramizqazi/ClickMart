@@ -9,6 +9,7 @@ interface ProductType {
   thumbnail: any;
   name: string;
   price: number;
+  category: string;
   previousPrice: number;
 }
 
@@ -31,12 +32,13 @@ const ProductCard = ({ product }: { product: ProductType }) => {
       <div className="mt-4 p-3 flex justify-between">
         <div>
           <h3 className="text-lg font-semibold text-gray-700">
-            {/* <a href={product?}> */}
             <span aria-hidden="true" className="absolute inset-0" />
             {product?.name}
-            {/* </a> */}
           </h3>
-          <p className="mt-1 text-sm text-red-600 font-bold">Daraz</p>
+          <p className="mt-1 text-sm text-red-600 font-bold">
+            {product?.category?.slice(0, 1).toUpperCase() +
+              product?.category?.slice(1)}
+          </p>
         </div>
         <div>
           <p className="text-lg font-semibold text-red-600">{`${product?.price}$`}</p>

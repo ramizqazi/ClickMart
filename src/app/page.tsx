@@ -10,34 +10,43 @@ import HomeHeroSection from '@/components/Home/HomeHeroSection';
 import HomeListEmpty from '@/components/Home/HomeListEmpty';
 
 import { useGetProudcts } from '../../sanity/lib/queries';
+import { userGetCart } from '@/react-query/queries';
 
 const Home = () => {
   const isBigScreen = useMediaQuery({ query: '(max-width: 766px)' });
   const [selectedCategory, setSelectedCategory] = useState('all');
-  const { data: products, refetch, isLoading, isError } = useGetProudcts(selectedCategory);
-
+  const {
+    data: products,
+    refetch,
+    isLoading,
+    isError,
+  } = useGetProudcts(selectedCategory);
 
   useEffect(() => {
     refetch();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedCategory])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedCategory]);
 
   const _renderEmpty = () => {
     return (
       <>
-        {isLoading  && <HomeListEmpty />}
-        {isError  && (
-          <div className='h-52 justify-center items-center flex'>
-             <p className='text-center text-gray-400'>Coudnt fetch prodcuts something went wrong</p>
+        {isLoading && <HomeListEmpty />}
+        {isError && (
+          <div className="h-52 justify-center items-center flex">
+            <p className="text-center text-gray-400">
+              Coudnt fetch prodcuts something went wrong
+            </p>
           </div>
         )}
         {!isLoading && !isError && products?.length === 0 && (
-          <div className='h-52 justify-center items-center flex'>
-             <p className='text-center text-gray-400'>No product availble for this category</p>
+          <div className="h-52 justify-center items-center flex">
+            <p className="text-center text-gray-400">
+              No product availble for this category
+            </p>
           </div>
         )}
       </>
-    )
+    );
   };
 
   return (

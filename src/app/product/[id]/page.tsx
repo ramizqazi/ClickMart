@@ -7,6 +7,7 @@ import ProductImages from '@/components/Products/ProductImages';
 import ProductSizes from '@/components/Products/ProductSizes';
 import ProductLoading from '@/components/Products/ProductLoading';
 import { useGetProudctById } from '../../../../sanity/lib/queries';
+import { useAddToCart } from '@/react-query/mutations';
 
 function classNames(...classes: Array<string>) {
   return classes.filter(Boolean).join(' ');
@@ -15,11 +16,12 @@ function classNames(...classes: Array<string>) {
 const Product = () => {
   const pathname = usePathname();
   const id = pathname.split('/')[2];
+  const { mutate: addToCart } = useAddToCart();
 
   const { data: product, isLoading } = useGetProudctById(id);
 
-  const [selectedColor, setSelectedColor] = useState(product?.colors[0]);
-  const [selectedSize, setSelectedSize] = useState(product?.sizes[2]);
+  const [selectedColor, setSelectedColor] = useState(product?.colors[0]?.name);
+  const [selectedSize, setSelectedSize] = useState(product?.sizes[2]?.name);
 
   if (isLoading && !product) {
     return (
@@ -28,7 +30,14 @@ const Product = () => {
       </div>
     );
   }
-  console.log(product)
+
+  const _handleAddToCart = () => {
+    addToCart({
+      id: product?._id,
+      color: selectedColor,
+      size: selectedSize,
+    });
+  };
 
   return (
     <div className="bg-white">
@@ -53,7 +62,7 @@ const Product = () => {
               {`${product?.previousPrice}$`}
             </p>
 
-            <form className="mt-10">
+            <form className="mt-10" onSubmit={_handleAddToCart}>
               {/* Colors */}
               <div>
                 <h3 className="text-sm font-medium text-gray-900">Color</h3>
@@ -69,7 +78,7 @@ const Product = () => {
                     {product?.colors.map((color: any) => (
                       <RadioGroup.Option
                         key={color.name}
-                        value={color}
+                        value={color?.name}
                         className={({ active, checked }) =>
                           classNames(
                             color.selectedClass,
@@ -84,8 +93,8 @@ const Product = () => {
                         <span
                           aria-hidden="true"
                           className={classNames(
-                            color.class,
                             'h-8 w-8 rounded-full border border-black border-opacity-10',
+                            color.class,
                           )}
                         />
                       </RadioGroup.Option>

@@ -2,6 +2,7 @@ import { Dispatch, Fragment, SetStateAction, useState } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { XMarkIcon } from '@heroicons/react/24/outline';
 import Image from 'next/image';
+import { userGetCart } from '@/react-query/queries';
 
 const products = [
   {
@@ -38,6 +39,9 @@ export default function CartDrawer({
   open: boolean;
   setOpen: Dispatch<SetStateAction<boolean>>;
 }) {
+  const { data: cart } = userGetCart();
+
+  console.log(cart);
   return (
     <Transition.Root show={open} as={Fragment}>
       <Dialog as="div" className="relative z-10" onClose={setOpen}>
