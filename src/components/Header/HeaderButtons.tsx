@@ -1,13 +1,16 @@
-import Link from 'next/link';
+'use client';
 import React, { useState } from 'react';
 import { Heart, ShoppingCart } from 'react-feather';
 
 import CartDrawer from '../CartDrawer';
 import WishlistDrawer from '../WishlistDrawer';
+import { userGetCart } from '@/react-query/queries';
 
-const HeaderUserDropdown = ({ user }: any) => {
+const HeaderUserDropdown = () => { 
   const [cartDrawer, setCartDrawer] = useState(false);
   const [wishListDrawer, setWishListDrawer] = useState(false);
+  const user_id = window.localStorage.getItem('user_id') || '';
+  const {data: cartData, isLoading} = userGetCart(user_id);
 
   // if (!user) {
   //   return (
@@ -37,7 +40,7 @@ const HeaderUserDropdown = ({ user }: any) => {
             aria-hidden="true"
           />
           <span className="ml-2 text-sm font-medium text-white group-hover:text-white">
-            0
+           {cartData?.length}
           </span>
           <span className="sr-only">items in cart, view bag</span>
         </button>
@@ -56,7 +59,7 @@ const HeaderUserDropdown = ({ user }: any) => {
           <span className="sr-only">items in cart, view bag</span>
         </button>
       </div>
-      <CartDrawer open={cartDrawer} setOpen={setCartDrawer} />
+      <CartDrawer open={cartDrawer} setOpen={setCartDrawer} isLoading={isLoading} data={cartData} />
       <WishlistDrawer open={wishListDrawer} setOpen={setWishListDrawer} />
     </div>
   );

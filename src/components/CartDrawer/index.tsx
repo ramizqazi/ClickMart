@@ -1,47 +1,33 @@
-import { Dispatch, Fragment, SetStateAction, useState } from 'react';
+import { Dispatch, Fragment, SetStateAction, useEffect, useState } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { XMarkIcon } from '@heroicons/react/24/outline';
-import Image from 'next/image';
-import { userGetCart } from '@/react-query/queries';
 
-const products = [
-  {
-    id: 1,
-    name: 'Throwback Hip Bag',
-    href: '#',
-    color: 'Salmon',
-    price: '$90.00',
-    quantity: 1,
-    imageSrc:
-      'https://tailwindui.com/img/ecommerce-images/shopping-cart-page-04-product-01.jpg',
-    imageAlt:
-      'Salmon orange fabric pouch with match zipper, gray zipper pull, and adjustable hip belt.',
-  },
-  {
-    id: 2,
-    name: 'Medium Stuff Satchel',
-    href: '#',
-    color: 'Blue',
-    price: '$32.00',
-    quantity: 1,
-    imageSrc:
-      'https://tailwindui.com/img/ecommerce-images/shopping-cart-page-04-product-02.jpg',
-    imageAlt:
-      'Front of satchel with blue canvas body, black straps and handle, drawstring top, and front zipper pouch.',
-  },
-  // More products...
-];
+import CartDrawerItem from './CartDrawerItem';
+import { CircleLoader } from 'react-spinners';
 
 export default function CartDrawer({
   open,
   setOpen,
+  isLoading,
+  data,
 }: {
   open: boolean;
+  isLoading: boolean;
+  data: Array<any>;
   setOpen: Dispatch<SetStateAction<boolean>>;
 }) {
-  const { data: cart } = userGetCart();
+  const [cartItems, setCartItems] = useState(data);
+  const subtotal = cartItems?.reduce(
+    (sum: number, product: any) => sum + product.price,
+    0,
+  );
 
-  console.log(cart);
+  useEffect(() => {
+    setCartItems(data);
+  }, [data]);
+
+  console.log(cartItems)
+
   return (
     <Transition.Root show={open} as={Fragment}>
       <Dialog as="div" className="relative z-10" onClose={setOpen}>
@@ -87,55 +73,29 @@ export default function CartDrawer({
 
                       <div className="mt-8">
                         <div className="flow-root">
-                          <ul
-                            role="list"
-                            className="-my-6 divide-y divide-gray-200">
-                            {products.map(product => (
-                              <li key={product.id} className="flex py-6">
-                                <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
-                                  <Image
-                                    src={product.imageSrc}
-                                    width="200"
-                                    height="200"
-                                    alt={product.imageAlt}
-                                    className="h-full w-full object-cover object-center"
-                                  />
-                                </div>
-
-                                <div className="ml-4 flex flex-1 flex-col">
-                                  <div>
-                                    <div className="flex justify-between text-base font-medium text-gray-900">
-                                      <h3>
-                                        <a href={product.href}>
-                                          {product.name}
-                                        </a>
-                                      </h3>
-                                      <p className="ml-4">{product.price}</p>
-                                    </div>
-                                    <p className="mt-1 text-sm text-gray-500">
-                                      {product.color}
-                                    </p>
-                                  </div>
-                                  <div className="flex flex-1 items-end justify-between text-sm">
-                                    <div className="flex space-x-2">
-                                      <p className="text-gray-500">
-                                        Qty {product.quantity}
-                                      </p>
-                                      <p className="text-gray-500">size xl</p>
-                                    </div>
-
-                                    <div className="flex">
-                                      <button
-                                        type="button"
-                                        className="font-medium text-red-600 hover:text-red-500">
-                                        Remove
-                                      </button>
-                                    </div>
-                                  </div>
-                                </div>
-                              </li>
-                            ))}
-                          </ul>
+                          {!isLoading ? (
+                            <ul
+                              role="list"
+                              className="-my-6 divide-y divide-gray-200">
+                              {cartItems?.length > 0 &&
+                                cartItems?.map(
+                                  (product: any, index: number) => (
+                                    <CartDrawerItem
+                                      key={index}
+                                      cartItem={product}
+                                      onCartItemChange={setCartItems}
+                                    />
+                                  ),
+                                )}
+                            </ul>
+                          ) : (
+                            <CircleLoader size={35} color="#999" />
+                          )}
+                          {!isLoading && cartItems?.length === 0 ? (
+                            <p className="text-black text-center my-20">
+                              No Items in cart
+                            </p>
+                          ) : null}
                         </div>
                       </div>
                     </div>
@@ -143,7 +103,7 @@ export default function CartDrawer({
                     <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
                       <div className="flex justify-between text-base font-medium text-gray-900">
                         <p>Subtotal</p>
-                        <p>$262.00</p>
+                        <p>{`$${subtotal}`}</p>
                       </div>
                       <p className="mt-0.5 text-sm text-gray-500">
                         Shipping and taxes calculated at checkout.

@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import { usePathname } from 'next/navigation';
 import { RadioGroup } from '@headlessui/react';
+import { v4 as uuid } from 'uuid';
 
 import ProductImages from '@/components/Products/ProductImages';
 import ProductSizes from '@/components/Products/ProductSizes';
@@ -12,10 +13,10 @@ import { useAddToCart } from '@/react-query/mutations';
 function classNames(...classes: Array<string>) {
   return classes.filter(Boolean).join(' ');
 }
-
 const Product = () => {
   const pathname = usePathname();
   const id = pathname.split('/')[2];
+  const user_id = window?.localStorage.getItem('user_id');
   const { mutate: addToCart } = useAddToCart();
 
   const { data: product, isLoading } = useGetProudctById(id);
@@ -31,12 +32,34 @@ const Product = () => {
     );
   }
 
-  const _handleAddToCart = () => {
-    addToCart({
-      id: product?._id,
-      color: selectedColor,
-      size: selectedSize,
-    });
+  const _handleAddToCart = (e: Event | any) => {
+    e.preventDefault();
+    const disabled = !selectedColor || !selectedSize;
+
+    if (!disabled) {
+      if (user_id) {
+        addToCart({
+          id: product?._id,
+          user_id: user_id,
+          color: selectedColor,
+          size: selectedSize,
+          price: product?.price,
+        });
+      } else {
+        const uid = uuid();
+        window.localStorage.setItem('user_id', uid);
+
+        addToCart({
+          id: product?._id,
+          user_id: uid,
+          color: selectedColor,
+          size: selectedSize,
+          price: product?.price,
+        });
+      }
+    } else {
+      alert('please mark all options')
+    }
   };
 
   return (
@@ -81,9 +104,9 @@ const Product = () => {
                         value={color?.name}
                         className={({ active, checked }) =>
                           classNames(
-                            color.selectedClass,
                             active && checked ? 'ring ring-offset-1' : '',
                             !active && checked ? 'ring-2' : '',
+                            color?.class,
                             'relative -m-0.5 flex ring-red-400 cursor-pointer items-center justify-center rounded-full p-0.5 focus:outline-none',
                           )
                         }>

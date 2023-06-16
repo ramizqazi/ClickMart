@@ -1,9 +1,10 @@
 'use client';
-import { Suspense } from 'react';
+import { Suspense, useEffect } from 'react';
 import { Montserrat } from 'next/font/google';
 import { AnimatePresence } from 'framer-motion';
 import { usePathname } from 'next/navigation';
 import { QueryClientProvider } from 'react-query';
+import { v4 as uuid } from 'uuid';
 
 import Header from '@/components/Header';
 import { client as queryClient } from '../../config/react-query';
@@ -20,6 +21,14 @@ export default function RootLayout({
 }) {
   const pathname = usePathname();
   const isAuthScreen = pathname.includes('/auth');
+
+  useEffect(() => {
+    const user_id = window.localStorage.getItem('user_id');
+    if (!user_id) {
+      const uid = uuid();
+      window.localStorage.setItem('user_id', uid);
+    }
+  }, []);
 
   return (
     <html lang="en">
