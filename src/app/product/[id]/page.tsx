@@ -58,7 +58,7 @@ const Product = () => {
         });
       }
     } else {
-      alert('please mark all options')
+      alert('please mark all options');
     }
   };
 

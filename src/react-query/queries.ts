@@ -8,7 +8,7 @@ export const userGetCart = (user_id: string) =>
   useQuery(
     ['cart'],
     async () => {
-      const payload = await fetch(`http://localhost:3000/api/cart?`+ new URLSearchParams({user_id: user_id}), {
+      const payload = await fetch(`http://localhost:3000/api/cart?` + new URLSearchParams({ user_id: user_id }), {
         method: "GET",
         headers: {
           "Content-Type": "application/json",

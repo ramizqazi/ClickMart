@@ -26,7 +26,7 @@ export default function CartDrawer({
     setCartItems(data);
   }, [data]);
 
-  console.log(cartItems)
+  console.log(cartItems);
 
   return (
     <Transition.Root show={open} as={Fragment}>
@@ -83,6 +83,7 @@ export default function CartDrawer({
                                     <CartDrawerItem
                                       key={index}
                                       cartItem={product}
+                                      cartItems={cartItems}
                                       onCartItemChange={setCartItems}
                                     />
                                   ),

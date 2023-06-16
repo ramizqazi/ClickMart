@@ -6,28 +6,11 @@ import CartDrawer from '../CartDrawer';
 import WishlistDrawer from '../WishlistDrawer';
 import { userGetCart } from '@/react-query/queries';
 
-const HeaderUserDropdown = () => { 
+const HeaderUserDropdown = () => {
   const [cartDrawer, setCartDrawer] = useState(false);
   const [wishListDrawer, setWishListDrawer] = useState(false);
   const user_id = window.localStorage.getItem('user_id') || '';
-  const {data: cartData, isLoading} = userGetCart(user_id);
-
-  // if (!user) {
-  //   return (
-  //     <div className="space-x-2 flex ">
-  //       <Link
-  //         href="/auth/sign-in"
-  //         className="hover:underline text-white font-bold py-2 px-4 rounded">
-  //         sign in
-  //       </Link>
-  //       <Link
-  //         href="/auth/sign-up"
-  //         className="bg-red-600 flex hover:bg-red-700 text-white font-bold  justify-center items-center pl-2 pr-0 lg:py-2 lg:pl-4 lg:pr-3 rounded">
-  //         sign up <ChevronRight />
-  //       </Link>
-  //     </div>
-  //   );
-  // }
+  const { data: cartData, isLoading } = userGetCart(user_id);
 
   return (
     <div className="flex space-x-5">
@@ -40,7 +23,7 @@ const HeaderUserDropdown = () => {
             aria-hidden="true"
           />
           <span className="ml-2 text-sm font-medium text-white group-hover:text-white">
-           {cartData?.length}
+            {cartData?.length}
           </span>
           <span className="sr-only">items in cart, view bag</span>
         </button>
@@ -59,7 +42,12 @@ const HeaderUserDropdown = () => {
           <span className="sr-only">items in cart, view bag</span>
         </button>
       </div>
-      <CartDrawer open={cartDrawer} setOpen={setCartDrawer} isLoading={isLoading} data={cartData} />
+      <CartDrawer
+        open={cartDrawer}
+        setOpen={setCartDrawer}
+        isLoading={isLoading}
+        data={cartData}
+      />
       <WishlistDrawer open={wishListDrawer} setOpen={setWishListDrawer} />
     </div>
   );

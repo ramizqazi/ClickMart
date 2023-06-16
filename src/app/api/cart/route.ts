@@ -29,7 +29,7 @@ export const POST = async (request: Request) => {
       return NextResponse.json({ message: 'user-id not found', status: 'bad' })
     }
 
-    await db.insert(cartTable).values({
+    const payload = await db.insert(cartTable).values({
       user_id: user_id,
       product_id: req.id,
       size: req.size,
@@ -37,8 +37,33 @@ export const POST = async (request: Request) => {
       price: req.price,
     });
 
-    return NextResponse.json({ message: 'product add successfully', status: 'ok' })
+    return NextResponse.json({ message: 'product add successfully', status: 'ok', data: payload })
   } catch (e) {
     return NextResponse.json({ message: 'product add unsuccessfully', status: 'bad', error: e })
   }
 }
+
+export const DELETE = async (request: Request) => {
+  try {
+    const req = await request.json();
+    const user_id = req.user_id || '';
+    const product_id = req.product_id || '';
+
+    if (!user_id || !product_id) {
+      return NextResponse.json({ message: 'user-id or product-id not found', status: 'bad' });
+    }
+
+    const result = await db.delete(cartTable).where({
+      user_id: user_id,
+      product_id: product_id,
+    });
+
+    if (result) {
+      return NextResponse.json({ message: 'product not found', status: 'bad' });
+    }
+
+    return NextResponse.json({ message: 'product deleted successfully', status: 'ok' });
+  } catch (e) {
+    return NextResponse.json({ message: 'product delete unsuccessful', status: 'bad', error: e });
+  }
+};

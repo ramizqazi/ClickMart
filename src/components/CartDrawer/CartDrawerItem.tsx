@@ -5,22 +5,48 @@ import { useGetProudctById } from '../../../sanity/lib/queries';
 import { urlForImage } from '../../../sanity/lib/image';
 import { Minus, Plus } from 'react-feather';
 
-export default function CartDrawerItem({ cartItem, onCartItemChange }: any) {
+export default function CartDrawerItem({
+  cartItems,
+  cartItem,
+  onCartItemChange,
+}: any) {
   const { data: product } = useGetProudctById(cartItem?.product_id);
-  const [qty, setQty] = useState(0);
+  const [qty, setQty] = useState(1);
 
   const _handleAdd = () => {
     setQty(prev => prev + 1);
-    onCartItemChange((prev: any) => {
-      const filterdItems = prev?.filter((i: any) => i?.product_id !== cartItem?.product_id)
 
-      console.log(filterdItems)
+    const updatedCarItems = cartItems.map((_product: any) => {
+      if (_product.product_id === cartItem?.product_id) {
+        return {
+          ..._product,
+          price: _product.price + product?.price,
+        };
+      }
+      return _product;
+    });
 
-      return [...filterdItems, {...cartItem, price: cartItem?.price + cartItem?.price}]
-    })
+    onCartItemChange(updatedCarItems);
   };
-  
-  const _handleDelete = () => {};
+
+  const _handleDelete = () => {
+    setQty(prev => (prev !== 1 ? prev - 1 : prev));
+
+    if (qty !== 1) {
+      const updatedProducts = cartItems.map((_product: any) => {
+        if (_product.product_id === cartItem?.product_id) {
+          console.log(_product.price, cartItem?.price);
+          return {
+            ..._product,
+            price: _product.price - product?.price,
+          };
+        }
+        return _product;
+      });
+
+      onCartItemChange(updatedProducts);
+    }
+  };
 
   return (
     <li className="flex py-6">
@@ -45,11 +71,15 @@ export default function CartDrawerItem({ cartItem, onCartItemChange }: any) {
         </div>
         <div>
           <div className="flex space-x-2 items-center">
-            <button onClick={_handleAdd} className="bg-red-500 w-5 h-5 flex justify-center items-center rounded-full hover:bg-red-400">
+            <button
+              onClick={_handleAdd}
+              className="bg-red-500 w-5 h-5 flex justify-center items-center rounded-full hover:bg-red-400">
               <Plus size={16} color="white" />
             </button>
             <p className="text-black">{qty}</p>
-            <button className="bg-red-500 w-5 h-5 flex justify-center items-center rounded-full hover:bg-red-400">
+            <button
+              onClick={_handleDelete}
+              className="bg-red-500 w-5 h-5 flex justify-center items-center rounded-full hover:bg-red-400">
               <Minus size={16} color="white" />
             </button>
           </div>
