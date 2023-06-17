@@ -1,5 +1,6 @@
 'use client';
 import { useState } from 'react';
+import { Heart } from 'react-feather';
 import { usePathname } from 'next/navigation';
 import { RadioGroup } from '@headlessui/react';
 import { v4 as uuid } from 'uuid';
@@ -8,7 +9,8 @@ import ProductImages from '@/components/Products/ProductImages';
 import ProductSizes from '@/components/Products/ProductSizes';
 import ProductLoading from '@/components/Products/ProductLoading';
 import { useGetProudctById } from '../../../../sanity/lib/queries';
-import { useAddToCart } from '@/react-query/mutations';
+import { useAddToCart, useAddToWishlist } from '@/react-query/mutations';
+import { useGetWishlist } from '@/react-query/queries';
 
 function classNames(...classes: Array<string>) {
   return classes.filter(Boolean).join(' ');
@@ -16,13 +18,21 @@ function classNames(...classes: Array<string>) {
 const Product = () => {
   const pathname = usePathname();
   const id = pathname.split('/')[2];
-  const user_id = window?.localStorage.getItem('user_id');
   const { mutate: addToCart } = useAddToCart();
+  const user_id = window?.localStorage.getItem('user_id') || '';
 
+  const { data: wishlist } = useGetWishlist(user_id);
   const { data: product, isLoading } = useGetProudctById(id);
 
   const [selectedColor, setSelectedColor] = useState(product?.colors[0]?.name);
   const [selectedSize, setSelectedSize] = useState(product?.sizes[2]?.name);
+  const [isProductInWishlist, setIsProductInWishlist] = useState(
+    wishlist?.find((p: any) => p?.product_id === product?._id) ? true : false,
+  );
+
+  const { mutate: addToWishList } = useAddToWishlist(
+    (reqStatus: string) => reqStatus === 'bad' && setIsProductInWishlist(false),
+  );
 
   if (isLoading && !product) {
     return (
@@ -59,6 +69,18 @@ const Product = () => {
       }
     } else {
       alert('please mark all options');
+    }
+  };
+
+  const _handleWishListClick = () => {
+    if (!isProductInWishlist) {
+      setIsProductInWishlist(true);
+      addToWishList({
+        user_id: user_id,
+        product_id: product?._id,
+      });
+    } else {
+      setIsProductInWishlist(false);
     }
   };
 
@@ -117,9 +139,10 @@ const Product = () => {
                           aria-hidden="true"
                           className={classNames(
                             'h-8 w-8 rounded-full border border-black border-opacity-10',
-                            color.class,
+                            `${color.class}`,
                           )}
                         />
+                        {console.log(color.class)}
                       </RadioGroup.Option>
                     ))}
                   </div>
@@ -139,6 +162,15 @@ const Product = () => {
                 Add to bag
               </button>
             </form>
+            <button
+              onClick={_handleWishListClick}
+              className="mt-10 flex items-center justify-center rounded-md border border-transparent bg-transparent px-4 py-3 text-base font-medium text-white  outline-none ring-2 ring-red-500 ring-offset-2">
+              <Heart
+                fill={isProductInWishlist ? 'red' : 'transparent'}
+                size={22}
+                color="red"
+              />
+            </button>
           </div>
 
           <div className="py-10 lg:col-span-2 lg:col-start-1 lg:border-r lg:border-gray-200 lg:pb-16 lg:pr-8 lg:pt-6">

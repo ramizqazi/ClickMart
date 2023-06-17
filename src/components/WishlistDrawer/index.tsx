@@ -1,31 +1,21 @@
-import { Dispatch, Fragment, SetStateAction, useEffect, useState } from 'react';
+import { Dispatch, Fragment, SetStateAction, useState } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { XMarkIcon } from '@heroicons/react/24/outline';
-
-import CartDrawerItem from './CartDrawerItem';
+import Image from 'next/image';
+import WishlistDrawerItem from './WishlistDrawerItem';
 import { CircleLoader } from 'react-spinners';
 
-export default function CartDrawer({
+export default function WishlistDrawer({
   open,
   setOpen,
-  isLoading,
   data,
+  isLoading,
 }: {
   open: boolean;
+  data: any;
   isLoading: boolean;
-  data: Array<any>;
   setOpen: Dispatch<SetStateAction<boolean>>;
 }) {
-  const [cartItems, setCartItems] = useState(data);
-  const subtotal = cartItems?.reduce(
-    (sum: number, product: any) => sum + product.price,
-    0,
-  );
-
-  useEffect(() => {
-    setCartItems(data);
-  }, [data]);
-
   return (
     <Transition.Root show={open} as={Fragment}>
       <Dialog as="div" className="relative z-10" onClose={setOpen}>
@@ -56,7 +46,7 @@ export default function CartDrawer({
                     <div className="flex-1 overflow-y-auto px-4 py-6 sm:px-6">
                       <div className="flex items-start justify-between">
                         <Dialog.Title className="text-lg font-medium text-gray-900">
-                          Shopping cart
+                          Wish list
                         </Dialog.Title>
                         <div className="ml-3 flex h-7 items-center">
                           <button
@@ -75,56 +65,23 @@ export default function CartDrawer({
                             <ul
                               role="list"
                               className="-my-6 divide-y divide-gray-200">
-                              {cartItems?.length > 0 &&
-                                cartItems?.map(
-                                  (product: any, index: number) => (
-                                    <CartDrawerItem
-                                      key={index}
-                                      cartItem={product}
-                                      cartItems={cartItems}
-                                      onCartItemChange={setCartItems}
-                                    />
-                                  ),
-                                )}
+                              {data?.length > 0 &&
+                                data?.map((product: any, index: number) => (
+                                  <WishlistDrawerItem
+                                    key={index}
+                                    wishlistItem={product}
+                                  />
+                                ))}
                             </ul>
                           ) : (
                             <CircleLoader size={35} color="#999" />
                           )}
-                          {!isLoading && cartItems?.length === 0 ? (
+                          {!isLoading && data?.length === 0 ? (
                             <p className="text-black text-center my-20">
-                              No Items in cart
+                              No Items in your wishlist
                             </p>
                           ) : null}
                         </div>
-                      </div>
-                    </div>
-
-                    <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
-                      <div className="flex justify-between text-base font-medium text-gray-900">
-                        <p>Subtotal</p>
-                        <p>{`$${subtotal}`}</p>
-                      </div>
-                      <p className="mt-0.5 text-sm text-gray-500">
-                        Shipping and taxes calculated at checkout.
-                      </p>
-                      <div className="mt-6">
-                        <a
-                          href="#"
-                          className="flex items-center justify-center rounded-md border border-transparent bg-red-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-red-700">
-                          Checkout
-                        </a>
-                      </div>
-                      <div className="mt-6 flex justify-center text-center text-sm text-gray-500">
-                        <p>
-                          or{' '}
-                          <button
-                            type="button"
-                            className="font-medium text-red-600 hover:text-red-500"
-                            onClick={() => setOpen(false)}>
-                            Continue Shopping
-                            <span aria-hidden="true"> &rarr;</span>
-                          </button>
-                        </p>
                       </div>
                     </div>
                   </div>

@@ -12,4 +12,11 @@ export const cartTable = pgTable('clickmartshoppingcart', {
   price: integer('price')
 });
 
+export const wishlistTable = pgTable('clickmartwishlist', {
+  user_id: varchar("user_id", {
+    length: 255
+  }),
+  product_id: varchar("product_id", { length: 255 }),
+});
+
 export const db = drizzle(sql)
