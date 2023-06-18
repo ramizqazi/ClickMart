@@ -13,7 +13,7 @@ const HeaderUserDropdown = () => {
   const { data: cartData, isLoading: cartLoading } = useGetCart(user_id);
   const { data: wishlistData, isLoading: wishlistLoading } =
     useGetWishlist(user_id);
-  console.log(wishlistData);
+
   return (
     <div className="flex space-x-5">
       <div className="ml-4 flow-root lg:ml-6">

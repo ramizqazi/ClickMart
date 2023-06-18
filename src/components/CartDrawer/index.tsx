@@ -4,6 +4,7 @@ import { XMarkIcon } from '@heroicons/react/24/outline';
 
 import CartDrawerItem from './CartDrawerItem';
 import { CircleLoader } from 'react-spinners';
+import Link from 'next/link';
 
 export default function CartDrawer({
   open,
@@ -108,11 +109,12 @@ export default function CartDrawer({
                         Shipping and taxes calculated at checkout.
                       </p>
                       <div className="mt-6">
-                        <a
-                          href="#"
+                        <Link
+                          href={`/checkout?amount=${subtotal}`}
+                          onClick={() => setOpen(false)}
                           className="flex items-center justify-center rounded-md border border-transparent bg-red-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-red-700">
                           Checkout
-                        </a>
+                        </Link>
                       </div>
                       <div className="mt-6 flex justify-center text-center text-sm text-gray-500">
                         <p>

@@ -2,9 +2,20 @@ import Image from 'next/image';
 
 import { useGetProudctById } from '../../../sanity/lib/queries';
 import { urlForImage } from '../../../sanity/lib/image';
+import { useDeleteFromWishlist } from '@/react-query/mutations';
 
 export default function WishlistDrawerItem({ wishlistItem }: any) {
+  const user_id = window.localStorage.getItem('user_id');
+  const { mutate: deleteFromWishlist } = useDeleteFromWishlist();
   const { data: product } = useGetProudctById(wishlistItem?.product_id);
+
+  const _handleRemoveFromCart = () => {
+    deleteFromWishlist({
+      user_id,
+      product_id: wishlistItem?.product_id,
+    });
+  };
+
   return (
     <li className="flex py-6">
       <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
@@ -37,6 +48,7 @@ export default function WishlistDrawerItem({ wishlistItem }: any) {
           <div className="flex">
             <button
               type="button"
+              onClick={_handleRemoveFromCart}
               className="font-medium text-red-600 hover:text-red-500">
               Remove
             </button>

@@ -29,16 +29,14 @@ export const useGetProudcts = (category: string) =>
           thumbnail,
           previousPrice,
         }`)
-        console.log(1, payload)
 
         return payload;
       }
     },
   );
-
 /**
- * Get Product by id
- */
+* Get Product by id
+*/
 export const useGetProudctById = (id: string) =>
   useQuery(
     ['products', id],
@@ -49,3 +47,19 @@ export const useGetProudctById = (id: string) =>
     },
   );
 
+
+
+/**
+ * Get Products by search text
+ */
+export const useGetProductsBySearchText = (searchText: string) =>
+  useQuery(
+    ['products', searchText],
+    async () => {
+      const payload = await client.fetch(
+        `*[_type=="product" && (name match "${searchText}" || description match "${searchText}" || details match "${searchText}")]`
+      );
+
+      return payload;
+    },
+  );

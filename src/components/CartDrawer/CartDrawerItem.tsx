@@ -4,12 +4,15 @@ import { useState } from 'react';
 import { useGetProudctById } from '../../../sanity/lib/queries';
 import { urlForImage } from '../../../sanity/lib/image';
 import { Minus, Plus } from 'react-feather';
+import { useDeleteFromCart } from '@/react-query/mutations';
 
 export default function CartDrawerItem({
   cartItems,
   cartItem,
   onCartItemChange,
 }: any) {
+  const user_id = window.localStorage.getItem('user_id');
+  const { mutate: deleteFromCart } = useDeleteFromCart();
   const { data: product } = useGetProudctById(cartItem?.product_id);
   const [qty, setQty] = useState(1);
 
@@ -35,7 +38,6 @@ export default function CartDrawerItem({
     if (qty !== 1) {
       const updatedProducts = cartItems.map((_product: any) => {
         if (_product.product_id === cartItem?.product_id) {
-          console.log(_product.price, cartItem?.price);
           return {
             ..._product,
             price: _product.price - product?.price,
@@ -46,6 +48,13 @@ export default function CartDrawerItem({
 
       onCartItemChange(updatedProducts);
     }
+  };
+
+  const _handleRemoveFromCart = () => {
+    deleteFromCart({
+      user_id,
+      product_id: cartItem?.product_id,
+    });
   };
 
   return (
@@ -93,6 +102,7 @@ export default function CartDrawerItem({
           <div className="flex">
             <button
               type="button"
+              onClick={_handleRemoveFromCart}
               className="font-medium text-red-600 hover:text-red-500">
               Remove
             </button>

@@ -9,7 +9,11 @@ import ProductImages from '@/components/Products/ProductImages';
 import ProductSizes from '@/components/Products/ProductSizes';
 import ProductLoading from '@/components/Products/ProductLoading';
 import { useGetProudctById } from '../../../../sanity/lib/queries';
-import { useAddToCart, useAddToWishlist } from '@/react-query/mutations';
+import {
+  useAddToCart,
+  useAddToWishlist,
+  useDeleteFromWishlist,
+} from '@/react-query/mutations';
 import { useGetWishlist } from '@/react-query/queries';
 
 function classNames(...classes: Array<string>) {
@@ -33,6 +37,7 @@ const Product = () => {
   const { mutate: addToWishList } = useAddToWishlist(
     (reqStatus: string) => reqStatus === 'bad' && setIsProductInWishlist(false),
   );
+  const { mutate: deleteFromWishList } = useDeleteFromWishlist();
 
   if (isLoading && !product) {
     return (
@@ -76,11 +81,15 @@ const Product = () => {
     if (!isProductInWishlist) {
       setIsProductInWishlist(true);
       addToWishList({
-        user_id: user_id,
+        user_id,
         product_id: product?._id,
       });
     } else {
       setIsProductInWishlist(false);
+      deleteFromWishList({
+        user_id,
+        product_id: product?._id,
+      });
     }
   };
 
@@ -142,7 +151,6 @@ const Product = () => {
                             `${color.class}`,
                           )}
                         />
-                        {console.log(color.class)}
                       </RadioGroup.Option>
                     ))}
                   </div>

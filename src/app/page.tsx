@@ -10,7 +10,6 @@ import HomeHeroSection from '@/components/Home/HomeHeroSection';
 import HomeListEmpty from '@/components/Home/HomeListEmpty';
 
 import { useGetProudcts } from '../../sanity/lib/queries';
-import { userGetCart } from '@/react-query/queries';
 
 const Home = () => {
   const isBigScreen = useMediaQuery({ query: '(max-width: 766px)' });
