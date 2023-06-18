@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Heart, ShoppingCart } from 'react-feather';
 
 import CartDrawer from '../CartDrawer';
@@ -9,7 +9,12 @@ import { useGetCart, useGetWishlist } from '@/react-query/queries';
 const HeaderUserDropdown = () => {
   const [cartDrawer, setCartDrawer] = useState(false);
   const [wishListDrawer, setWishListDrawer] = useState(false);
-  const user_id = window.localStorage.getItem('user_id') || '';
+  const [user_id, setUserId] = useState('');
+
+  useEffect(() => {
+    setUserId(window?.localStorage.getItem('user_id') || '');
+  }, []);
+
   const { data: cartData, isLoading: cartLoading } = useGetCart(user_id);
   const { data: wishlistData, isLoading: wishlistLoading } =
     useGetWishlist(user_id);

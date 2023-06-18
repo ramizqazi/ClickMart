@@ -8,7 +8,7 @@ export const useGetCart = (user_id: string) =>
   useQuery(
     ['cart'],
     async () => {
-      const payload = await fetch(`https://click-mart.vercel.app//api/cart?` + new URLSearchParams({ user_id: user_id }), {
+      const payload = await fetch(`https://click-mart.vercel.app/api/cart?` + new URLSearchParams({ user_id: user_id }), {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -27,7 +27,7 @@ export const useGetWishlist = (user_id: string) =>
   useQuery(
     ['wishlist'],
     async () => {
-      const payload = await fetch(`https://click-mart.vercel.app//api/wishlist?` + new URLSearchParams({ user_id: user_id }), {
+      const payload = await fetch(`https://click-mart.vercel.app/api/wishlist?` + new URLSearchParams({ user_id: user_id }), {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -46,7 +46,7 @@ export const useGetCheckoutId = (amount: string) =>
   useQuery(
     ['checkoutId'],
     async () => {
-      const payload = await fetch(`https://click-mart.vercel.app//api/checkout?` + new URLSearchParams({ amount: amount }), {
+      const payload = await fetch(`https://click-mart.vercel.app/api/checkout?` + new URLSearchParams({ amount: amount }), {
         method: "GET",
         headers: {
           "Content-Type": "application/json",

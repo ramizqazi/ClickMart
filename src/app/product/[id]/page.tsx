@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Heart } from 'react-feather';
 import { usePathname } from 'next/navigation';
 import { RadioGroup } from '@headlessui/react';
@@ -23,7 +23,11 @@ const Product = () => {
   const pathname = usePathname();
   const id = pathname.split('/')[2];
   const { mutate: addToCart } = useAddToCart();
-  const user_id = window?.localStorage.getItem('user_id') || '';
+  const [user_id, setUserId] = useState('');
+
+  useEffect(() => {
+    setUserId(window?.localStorage.getItem('user_id') || '');
+  }, []);
 
   const { data: wishlist } = useGetWishlist(user_id);
   const { data: product, isLoading } = useGetProudctById(id);

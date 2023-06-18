@@ -1,13 +1,18 @@
 import Image from 'next/image';
+import { useEffect, useState } from 'react';
 
 import { useGetProudctById } from '../../../sanity/lib/queries';
 import { urlForImage } from '../../../sanity/lib/image';
 import { useDeleteFromWishlist } from '@/react-query/mutations';
 
 export default function WishlistDrawerItem({ wishlistItem }: any) {
-  const user_id = window.localStorage.getItem('user_id');
+  const [user_id, setUserId] = useState('');
   const { mutate: deleteFromWishlist } = useDeleteFromWishlist();
   const { data: product } = useGetProudctById(wishlistItem?.product_id);
+
+  useEffect(() => {
+    setUserId(window?.localStorage.getItem('user_id') || '');
+  }, []);
 
   const _handleRemoveFromCart = () => {
     deleteFromWishlist({

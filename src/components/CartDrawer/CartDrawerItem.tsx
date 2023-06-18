@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { useGetProudctById } from '../../../sanity/lib/queries';
 import { urlForImage } from '../../../sanity/lib/image';
@@ -11,10 +11,14 @@ export default function CartDrawerItem({
   cartItem,
   onCartItemChange,
 }: any) {
-  const user_id = window.localStorage.getItem('user_id');
+  const [user_id, setUserId] = useState('');
   const { mutate: deleteFromCart } = useDeleteFromCart();
   const { data: product } = useGetProudctById(cartItem?.product_id);
   const [qty, setQty] = useState(1);
+
+  useEffect(() => {
+    setUserId(window?.localStorage.getItem('user_id') || '');
+  }, []);
 
   const _handleAdd = () => {
     setQty(prev => prev + 1);
