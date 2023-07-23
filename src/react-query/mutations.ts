@@ -1,6 +1,5 @@
 import { useMutation } from "react-query"
 import { client } from "../../config/react-query";
-import { L } from "drizzle-orm/db.d-a6fe1b19";
 
 /**
  * Add to cart
