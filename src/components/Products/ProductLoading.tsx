@@ -30,11 +30,9 @@ const ProductLoading = () => {
         </div>
 
         <div className="mt-4 lg:row-span-3 lg:mt-0">
-          <div className="h-2.5 bg-gray-200 rounded-full w-48 mb-4"></div>
+          <div className="h-2.5 bg-gray-200 rounded-full w-48 mb-4" />
           <div className="h-2.5 bg-gray-200 rounded-full w-48 mb-4"></div>
         </div>
-
-        
 
         <div className="py-10 lg:col-span-2 lg:col-start-1 lg:border-r lg:border-gray-200 lg:pb-16 lg:pr-8 lg:pt-6">
           {/* Description and details */}
