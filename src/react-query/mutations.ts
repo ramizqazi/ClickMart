@@ -5,7 +5,7 @@ import { client } from "../../config/react-query";
  * Add to cart
  */
 export const useAddToCart = () => useMutation((data: any) => {
-  return fetch(`http://localhost:3000/api/cart`, {
+  return fetch(`https://click-mart-git-main-ramizqazi.vercel.app/api/cart`, {
     method: 'POST',
     body: JSON.stringify(data)
   })
@@ -19,7 +19,7 @@ export const useAddToCart = () => useMutation((data: any) => {
  * Add to wishlist
  */
 export const useAddToWishlist = (cb: Function) => useMutation((data: any) => {
-  return fetch(`http://localhost:3000/api/wishlist`, {
+  return fetch(`https://click-mart-git-main-ramizqazi.vercel.app/api/wishlist`, {
     method: 'POST',
     body: JSON.stringify(data)
   }).then((res) => {
@@ -39,7 +39,7 @@ export const useAddToWishlist = (cb: Function) => useMutation((data: any) => {
  * Delete from cart
  */
 export const useDeleteFromCart = () => useMutation((data: any) => {
-  return fetch(`http://localhost:3000/api/cart?` + new URLSearchParams(data), {
+  return fetch(`https://click-mart-git-main-ramizqazi.vercel.app/api/cart?` + new URLSearchParams(data), {
     method: 'DELETE',
   })
 }, {
@@ -52,7 +52,7 @@ export const useDeleteFromCart = () => useMutation((data: any) => {
  * Delete from cart
  */
 export const useDeleteFromWishlist = () => useMutation((data: any) => {
-  return fetch(`http://localhost:3000/api/wishlist?` + new URLSearchParams(data), {
+  return fetch(`https://click-mart-git-main-ramizqazi.vercel.app/api/wishlist?` + new URLSearchParams(data), {
     method: 'DELETE',
     body: JSON.stringify(data)
   })
