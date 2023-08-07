@@ -16,7 +16,7 @@ const Header = () => {
         animate={{ y: 0 }}
         transition={{
           ease: 'easeInOut',
-          duration: 0.9,
+          duration: 0.3,
         }}
         className="px-5 py-2 bg-black border-b-2 border-red-600">
         <div className="flex justify-between items-center mx-auto max-w-screen-xl">

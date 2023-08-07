@@ -5,6 +5,7 @@ import FlatList from 'flatlist-react/lib';
 import ProductCard from '@/common/ProductCard';
 import { useMediaQuery } from 'react-responsive';
 import { useGetProductsBySearchText } from '../../../../sanity/lib/queries';
+import Header from '@/components/Header';
 
 const Product = () => {
   const query = useSearchParams().getAll('query')[0];
@@ -16,6 +17,7 @@ const Product = () => {
 
   return (
     <div className="bg-gray-200 h-full">
+      <Header />
       <div className="p-2 pt-10 max-w-screen-xl m-auto">
         <FlatList
           list={data}

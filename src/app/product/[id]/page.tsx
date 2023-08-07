@@ -15,6 +15,7 @@ import {
   useDeleteFromWishlist,
 } from '@/react-query/mutations';
 import { useGetWishlist } from '@/react-query/queries';
+import Header from '@/components/Header';
 
 function classNames(...classes: Array<string>) {
   return classes.filter(Boolean).join(' ');
@@ -80,7 +81,7 @@ const Product = () => {
       alert('please mark all options');
     }
   };
-
+  console.log(isProductInWishlist);
   const _handleWishListClick = () => {
     if (!isProductInWishlist) {
       setIsProductInWishlist(true);
@@ -99,6 +100,7 @@ const Product = () => {
 
   return (
     <div className="bg-white">
+      <Header />
       <div className="pt-6">
         {product?.images && <ProductImages photos={product?.images} />}
 

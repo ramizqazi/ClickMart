@@ -38,9 +38,15 @@ export const useAddToWishlist = (cb: Function) => useMutation((data: any) => {
 /**
  * Delete from cart
  */
-export const useDeleteFromCart = () => useMutation((data: any) => {
+export const useDeleteFromCart = (cb: Function) => useMutation((data: any) => {
   return fetch(`http://localhost:3000/api/cart?` + new URLSearchParams(data), {
     method: 'DELETE',
+  }).then((res) => {
+    if (res) {
+      if (typeof cb === 'function') {
+        cb(res?.status)
+      }
+    }
   })
 }, {
   onSuccess: () => {

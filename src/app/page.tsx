@@ -10,6 +10,7 @@ import HomeHeroSection from '@/components/Home/HomeHeroSection';
 import HomeListEmpty from '@/components/Home/HomeListEmpty';
 
 import { useGetProudcts } from '../../sanity/lib/queries';
+import Header from '@/components/Header';
 
 const Home = () => {
   const isBigScreen = useMediaQuery({ query: '(max-width: 766px)' });
@@ -50,6 +51,7 @@ const Home = () => {
 
   return (
     <div className="w-full pb-5 bg-gray-200">
+      <Header />
       <HomeHeader
         category={selectedCategory}
         setCategory={setSelectedCategory}

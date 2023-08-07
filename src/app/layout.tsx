@@ -36,7 +36,7 @@ export default function RootLayout({
         <AnimatePresence
           mode="wait"
           onExitComplete={() => window.scrollTo(0, 0)}>
-          {!isAuthScreen && <Header />}
+         
           <QueryClientProvider client={queryClient}>
             <Suspense fallback={''}>{children}</Suspense>
           </QueryClientProvider>
