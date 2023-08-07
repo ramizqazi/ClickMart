@@ -11,14 +11,14 @@ export default function CartDrawerItem({
   cartItem,
   onCartItemChange,
 }: any) {
-  const [user_id, setUserId] = useState('');
+  let user_id: string | null = null;
+
+  if(typeof window !== 'undefined') {
+    user_id = window?.localStorage.getItem('user_id') ;
+  }
   const { mutate: deleteFromCart } = useDeleteFromCart();
   const { data: product } = useGetProudctById(cartItem?.product_id);
   const [qty, setQty] = useState(1);
-
-  useEffect(() => {
-    setUserId(window?.localStorage.getItem('user_id') || '');
-  }, []);
 
   const _handleAdd = () => {
     setQty(prev => prev + 1);

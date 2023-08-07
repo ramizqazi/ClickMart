@@ -6,10 +6,14 @@ import CartDrawer from '../CartDrawer';
 import WishlistDrawer from '../WishlistDrawer';
 import { useGetCart, useGetWishlist } from '@/react-query/queries';
 
-const HeaderUserDropdown = () => {
+const HeaderButtons = () => {
   const [cartDrawer, setCartDrawer] = useState(false);
   const [wishListDrawer, setWishListDrawer] = useState(false);
-  const user_id = window?.localStorage.getItem('user_id') || '';
+  let user_id: string | null = null;
+
+  if(typeof window !== 'undefined') {
+    user_id = window?.localStorage.getItem('user_id') ;
+  }
 
   const { data: cartData, isLoading: cartLoading } = useGetCart(user_id);
   const { data: wishlistData, isLoading: wishlistLoading } =
@@ -61,4 +65,4 @@ const HeaderUserDropdown = () => {
   );
 };
 
-export default HeaderUserDropdown;
+export default HeaderButtons;

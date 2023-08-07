@@ -3,7 +3,7 @@ import { useQuery } from 'react-query';
 /**
  * Get Cart
  */
-export const useGetCart = (user_id: string) =>
+export const useGetCart = (user_id: string | any) =>
   useQuery(
     ['cart'],
     async () => {
@@ -26,7 +26,7 @@ export const useGetCart = (user_id: string) =>
 /**
  * Get Wishlist
  */
-export const useGetWishlist = (user_id: string) =>
+export const useGetWishlist = (user_id: string | any) =>
   useQuery(
     ['wishlist'],
     async () => {

@@ -24,11 +24,11 @@ const Product = () => {
   const pathname = usePathname();
   const id = pathname.split('/')[2];
   const { mutate: addToCart } = useAddToCart();
-  const [user_id, setUserId] = useState('');
+  let user_id: string | null = null;
 
-  useEffect(() => {
-    setUserId(window?.localStorage.getItem('user_id') || '');
-  }, []);
+  if(typeof window !== 'undefined') {
+    user_id = window?.localStorage.getItem('user_id') ;
+  }
 
   const { data: wishlist } = useGetWishlist(user_id);
   const { data: product, isLoading } = useGetProudctById(id);
